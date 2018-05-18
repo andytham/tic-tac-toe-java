@@ -8,24 +8,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-	    ArrayList<int[]> solution = new ArrayList<>();
 
-        int[] sol1 = {1, 2, 3};
-        int[] sol2 = {4, 5, 6};
-        int[] sol3 = {7, 8, 9};
-        int[] sol4 = {1, 4, 7};
-        int[] sol5 = {2, 5, 8};
-        int[] sol6 = {3, 6, 9};
-        int[] sol7 = {1, 5, 9};
-        int[] sol8 = {3, 5, 7};
-        solution.add(sol1);
-        solution.add(sol2);
-        solution.add(sol3);
-        solution.add(sol4);
-        solution.add(sol5);
-        solution.add(sol6);
-        solution.add(sol7);
-        solution.add(sol8);
 
         Board board = new Board();
         System.out.println("TIC TAC TOE");
@@ -40,20 +23,22 @@ public class Main {
         Scanner reader = new Scanner(System.in);
         boolean gameRunning = true;
         String currentPlayer = "X";
-        while(gameRunning){
-            System.out.println(currentPlayer + "'s turn: ");
-            placePiece(reader, currentPlayer, board);
-            board.show();
-            if(isWinner(solution, board)) {
-                gameRunning = false;
-                System.out.println(currentPlayer + " wins!");
-            }
-            if (currentPlayer.equals("X")){
-                currentPlayer = "O";
-            } else if (currentPlayer.equals("O")){
-                currentPlayer = "X";
-            }
-        }
+        TwoPlayers two = new TwoPlayers();
+        two.runGame();
+//        while(gameRunning){
+//            System.out.println(currentPlayer + "'s turn: ");
+//            placePiece(reader, currentPlayer, board);
+//            board.show();
+//            if(isWinner(solution, board)) {
+//                gameRunning = false;
+//                System.out.println(currentPlayer + " wins!");
+//            }
+//            if (currentPlayer.equals("X")){
+//                currentPlayer = "O";
+//            } else if (currentPlayer.equals("O")){
+//                currentPlayer = "X";
+//            }
+//        }
     }
 
     public static boolean isWinner(ArrayList<int[]> solution, Board board){
