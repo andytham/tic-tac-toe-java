@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -41,24 +42,18 @@ public class Main {
         String currentPlayer = "X";
         while(gameRunning){
             System.out.println(currentPlayer + "'s turn: ");
-
             placePiece(reader, currentPlayer, board);
-
             board.show();
             if(isWinner(solution, board)) {
                 gameRunning = false;
                 System.out.println(currentPlayer + " wins!");
             }
-
             if (currentPlayer.equals("X")){
                 currentPlayer = "O";
             } else if (currentPlayer.equals("O")){
                 currentPlayer = "X";
             }
-
-
         }
-
     }
 
     public static boolean isWinner(ArrayList<int[]> solution, Board board){
@@ -72,12 +67,24 @@ public class Main {
     }
 
     public static void placePiece(Scanner reader, String currentPlayer, Board board){
-        int input = reader.nextInt();
-        if (board.get(input) != " "){
-            System.out.println("Spot taken");
-            placePiece(reader, currentPlayer, board);
-        } else {
-            board.put(input, currentPlayer);
+        boolean success = false;
+        do {
+            try {
+                int input = reader.nextInt();
+
+                if (board.get(input) != " ") {
+                    System.out.println("Spot unavailable.");
+                    placePiece(reader, currentPlayer, board);
+                } else {
+                    board.put(input, currentPlayer);
+                    success = true;
+                }
+            } catch (InputMismatchException exc) {
+                System.out.println("Need an integer, 1-9");
+                reader.nextLine();
+            }
         }
+        while(!success);
+
     }
 }
