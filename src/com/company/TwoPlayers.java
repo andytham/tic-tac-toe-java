@@ -34,7 +34,7 @@ public class TwoPlayers {
 
                 if (board.get(input) != " ") {
                     System.out.println("Spot unavailable.");
-                    placePiece(reader, currentPlayer, board);
+                    reader.nextLine();
                 } else {
                     board.put(input, currentPlayer);
                     success = true;
