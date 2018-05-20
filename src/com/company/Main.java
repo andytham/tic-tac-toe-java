@@ -23,8 +23,11 @@ public class Main {
         Scanner reader = new Scanner(System.in);
         boolean gameRunning = true;
         String currentPlayer = "X";
-        TwoPlayers two = new TwoPlayers();
-        two.runGame();
+//        TwoPlayers two = new TwoPlayers();
+//        two.runGame();
+
+        AIGame ai = new AIGame();
+        ai.runGame();
 //        while(gameRunning){
 //            System.out.println(currentPlayer + "'s turn: ");
 //            placePiece(reader, currentPlayer, board);

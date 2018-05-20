@@ -11,21 +11,49 @@ public class AIGame {
         System.out.println("Difficulty?\n1. Easy\n2. Hard");
         int difficultySetting = reader.nextInt();
         System.out.println("Who starts?\n1. You\n2. Computer");
-        int startingPlayer = reader.nextInt();
+        int firstToMove = reader.nextInt();
+        computerStart(difficultySetting, firstToMove);
 
-        if (startingPlayer == 2){
-            computerStart(difficultySetting);
-        }
     }
 
-    public void computerStart(int difficultySetting){
+    public void computerStart(int difficultySetting, int firstToMove){
         Scanner reader = new Scanner(System.in);
         boolean gameRunning = true;
+        Board board = new Board();
+        Solution solution = new Solution();
+        board.show();
         if (difficultySetting == 1){
-
-            while(gameRunning){
-
+            if (firstToMove == 2)
+                while(gameRunning){
+                    placeAI("X", board);
+                    board.show();
+                    if(isWinner(solution,board)){
+                        gameRunning = false;
+                        System.out.println("X" + " wins!");
+                    }
+                    placeHuman(reader,"O", board);
+                    if(isWinner(solution,board) && gameRunning != false){
+                        gameRunning = false;
+                        System.out.println("O" + " wins!");
+                    }
+            } else if (firstToMove == 1){
+                while(gameRunning){
+                    placeHuman(reader,"X", board);
+                    board.show();
+                    if(isWinner(solution,board)){
+                        gameRunning = false;
+                        System.out.println("X" + " wins!");
+                    }
+                    placeAI("O", board);
+                    board.show();
+                    if(isWinner(solution,board)  && gameRunning != false){
+                        gameRunning = false;
+                        System.out.println("O" + " wins!");
+                    }
+                    isWinner(solution,board);
+                }
             }
+
 
 
         }
@@ -35,10 +63,7 @@ public class AIGame {
         return rnd.nextInt(9) + 1;
     }
 
-    public int placeRandom(){
-    return 1;
-    }
-    public void placeAI(Board board){
+    public void placeAI(String currentPlayer, Board board){
         boolean success = false;
 
         int spot = newRandom();
@@ -50,8 +75,38 @@ public class AIGame {
                 check = true;
             }
         }
+        board.put(spot, currentPlayer);
+    }
 
-        board.put(spot, "X");
+    public void placeHuman(Scanner reader, String currentPlayer, Board board){
+        boolean success = false;
+        do {
+            try {
+                int input = reader.nextInt();
+
+                if (board.get(input) != " ") {
+                    System.out.println("Spot unavailable.");
+                    reader.nextLine();
+                } else {
+                    board.put(input, currentPlayer);
+                    success = true;
+                }
+            } catch (InputMismatchException exc) {
+                System.out.println("Need an integer, 1-9");
+                reader.nextLine();
+            }
+        }
+        while(!success);
+    }
+
+    public static boolean isWinner(Solution solution, Board board){
+        for(int i = 0; i < solution.size(); i++){
+            if(board.get(solution.get(i)[0]) != " " && board.get(solution.get(i)[0]) == board.get(solution.get(i)[1]) && board.get(solution.get(i)[1]) == board.get(solution.get(i)[2])){
+//                System.out.println(board);
+                return true;
+            }
+        }
+        return false;
     }
     //adjacency list//graph
 }
