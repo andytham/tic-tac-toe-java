@@ -10,6 +10,18 @@ public class AIGame {
 
         System.out.println("Difficulty?\n1. Easy\n2. Hard");
         int difficultySetting = reader.nextInt();
+        if(difficultySetting == 2){
+            System.out.println("Sorry, I didn't have a budget for a hard AI, defaulting to easy modo");
+            difficultySetting = 1;
+            try
+            {
+                Thread.sleep(3000);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+        }
         System.out.println("Who starts?\n1. You\n2. Computer");
         int firstToMove = reader.nextInt();
         computerStart(difficultySetting, firstToMove);
@@ -64,7 +76,7 @@ public class AIGame {
     }
 
     public void placeAI(String currentPlayer, Board board){
-        boolean success = false;
+
 
         int spot = newRandom();
         boolean check = false;
